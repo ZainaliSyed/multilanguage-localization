@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import {Text, View, TouchableOpacity, StyleSheet, Alert} from 'react-native';
 import I18n from '../I18n';
+import {generalAction} from '../actions/ServiceAction';
+import {CHANGE_DIRECTION} from '../actions/ActionTypes';
 
 class Screen extends Component {
   state: {
@@ -26,13 +29,21 @@ class Screen extends Component {
                 text: 'French',
                 onPress: () => {
                   I18n.locale = 'fr-Us';
-                  this.setState({changeLanguage: 'English'});
+                  this.props.generalAction(CHANGE_DIRECTION, {
+                    RTL: false,
+                    lang: 'fr-Us',
+                  });
+                  this.setState({changeLanguage: 'French'});
                 },
               },
               {
                 text: 'English',
                 onPress: () => {
                   I18n.locale = 'en-Us';
+                  this.props.generalAction(CHANGE_DIRECTION, {
+                    RTL: false,
+                    lang: 'en-Us',
+                  });
                   this.setState({changeLanguage: 'English'});
                 },
               },
@@ -40,7 +51,11 @@ class Screen extends Component {
                 text: 'Arabic',
                 onPress: () => {
                   I18n.locale = 'ar-Us';
-                  this.setState({changeLanguage: 'arabic'});
+                  this.props.generalAction(CHANGE_DIRECTION, {
+                    RTL: true,
+                    lang: 'ar-US',
+                  });
+                  this.setState({changeLanguage: 'Arabic'});
                 },
               },
               {
@@ -60,10 +75,16 @@ class Screen extends Component {
   };
 
   render() {
+    const {langDirection} = this.props;
     return (
       <View style={styles.container}>
         {this.heading()}
-        <View style={{flex: 2, width: '90%'}}>
+        <View
+          style={{
+            flex: 2,
+            width: '90%',
+            alignItems: langDirection ? 'flex-end' : 'flex-start',
+          }}>
           <Text style={styles.text}>{I18n.t('greeting')}</Text>
           <Text style={styles.text}>{I18n.t('title')}</Text>
           <Text style={styles.text}>{I18n.t('Message')}</Text>
@@ -73,7 +94,12 @@ class Screen extends Component {
     );
   }
 }
-export default Screen;
+
+const actions = {generalAction};
+const mapStateToProps = (state) => ({
+  langDirection: state.langDirection.rtl,
+});
+export default connect(mapStateToProps, actions)(Screen);
 
 const styles = StyleSheet.create({
   container: {backgroundColor: '#F5FCFF', flex: 1, alignItems: 'center'},

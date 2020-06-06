@@ -10,8 +10,8 @@ export default (state: Object = initialState, action: Object) => {
     case types.CHANGE_DIRECTION:
       return {
         ...state,
-        rtl: action.data.RTLStatus.RTL,
-        lang: action.data.RTLStatus.lang,
+        rtl: action.data.RTL,
+        lang: action.data.lang,
       };
     default:
       return state;

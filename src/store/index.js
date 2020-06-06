@@ -20,7 +20,7 @@ const logger = createLogger({
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  whitelist: [],
+  whitelist: ['langDirection'],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);
