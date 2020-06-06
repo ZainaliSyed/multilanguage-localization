@@ -1,0 +1,1 @@
+export const CHANGE_DIRECTION = 'CHANGE_DIRECTION';
