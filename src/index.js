@@ -10,13 +10,6 @@ import {generalAction} from './actions/ServiceAction';
 import {CHANGE_DIRECTION} from './actions/ActionTypes';
 
 export default class App extends Component {
-  componentDidMount() {
-    console.log('componentDidMount chala ');
-    console.log(
-      'componentDidMount chala langDirection',
-      store.getState().langDirection,
-    );
-  }
   state = {isReduxLoaded: false};
   onBeforeLift = () => {
     // setting backing previous state where user left
